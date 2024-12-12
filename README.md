@@ -69,6 +69,12 @@ Run the application using the `go run command or the built binary.
    ```
 
 ## Library Usage
+
+### Download the Library
+
+```bash
+go get github.com/mayckol/brfiscalfaker
+```
 ### Create a Template Generator
 * **Random CNPJ, CPF, and Access Key Generation:**
 
