@@ -1,0 +1,743 @@
+package brfiscalfaker
+
+const CFeXMLMock = `<?xml version="1.0" encoding="utf-8"?>
+<CFe>
+<infCFe Id="CFe{%accessKey%}" versao="0.08" versaoDadosEnt="0.08" versaoSB="030000">
+<ide>
+<cUF>{%cUF%}</cUF>
+<cNF>{%cNF%}</cNF>
+<mod>59</mod>
+<nserieSAT>{%nserieSAT%}</nserieSAT>
+<nCFe>{%nCFe%}</nCFe>
+<dEmi>{%dEmi%}</dEmi>
+<hEmi>{%hEmi%}</hEmi>
+<cDV>{%cDV%}</cDV>
+<tpAmb>{%tpAmb%}</tpAmb>
+<CNPJ>{%emitCNPJ%}</CNPJ>
+<signAC>{%signAC%}</signAC>
+<assinaturaQRCODE>{%assinaturaQRCODE%}</assinaturaQRCODE>
+<numeroCaixa>{%numeroCaixa%}</numeroCaixa>
+</ide>
+<emit>
+<CNPJ>{%CNPJ%}</CNPJ>
+<xNome>{%xNome%}</xNome>
+<xFant>{%xFant%}</xFant>
+<enderEmit>
+<xLgr>{%xLgr%}</xLgr>
+<nro>{%nro%}</nro>
+<xCpl>{%xCpl%}</xCpl>
+<xBairro>{%xBairro%}</xBairro>
+<xMun>{%xMun%}</xMun>
+<CEP>{%CEP%}</CEP>
+</enderEmit>
+<IE>{%IE%}</IE>
+<cRegTrib>{%cRegTrib%}</cRegTrib>
+<indRatISSQN>{%indRatISSQN%}</indRatISSQN>
+</emit>
+<dest>
+<CPF>{%CPF%}</CPF>
+<xNome>{%xNome%}</xNome>
+</dest>
+<det nItem="{%nItem%}">
+<prod>
+<cProd>{%cProd%}</cProd>
+<cEAN>{%cEAN%}</cEAN>
+<xProd>{%xProd%}</xProd>
+<NCM>{%NCM%}</NCM>
+<CFOP>{%CFOP%}</CFOP>
+<uCom>{%uCom%}</uCom>
+<qCom>{%qCom%}</qCom>
+<vUnCom>{%vUnCom%}</vUnCom>
+<vProd>{%vProd%}</vProd>
+<indRegra>{%indRegra%}</indRegra>
+<vItem>{%vItem%}</vItem>
+</prod>
+<imposto>
+<vItem12741>{%vItem12741%}</vItem12741>
+<ICMS>
+<ICMS00>
+<Orig>{%Orig%}</Orig>
+<CST>{%CST%}</CST>
+<pICMS>{%pICMS%}</pICMS>
+<vICMS>{%vICMS%}</vICMS>
+</ICMS00>
+</ICMS>
+<PIS>
+<PISAliq>
+<CST>{%CST%}</CST>
+<vBC>{%vBC%}</vBC>
+<pPIS>{%pPIS%}</pPIS>
+<vPIS>{%vPIS%}</vPIS>
+</PISAliq>
+</PIS>
+<COFINS>
+<COFINSAliq>
+<CST>{%CST%}</CST>
+<vBC>{%vBC%}</vBC>
+<pCOFINS>{%pCOFINS%}</pCOFINS>
+<vCOFINS>{%vCOFINS%}</vCOFINS>
+</COFINSAliq>
+</COFINS>
+</imposto>
+</det>
+<total>
+<ICMSTot>
+<vICMS>{%vICMS%}</vICMS>
+<vProd>{%vProd%}</vProd>
+<vDesc>{%vDesc%}</vDesc>
+<vPIS>{%vPIS%}</vPIS>
+<vCOFINS>{%vCOFINS%}</vCOFINS>
+<vPISST>{%vPISST%}</vPISST>
+<vCOFINSST>{%vCOFINSST%}</vCOFINSST>
+<vOutro>{%vOutro%}</vOutro>
+</ICMSTot>
+<vCFe>{%vCFe%}</vCFe>
+<vCFeLei12741>{%vCFeLei12741%}</vCFeLei12741>
+</total>
+<pgto>
+<MP>
+<cMP>{%cMP%}</cMP>
+<vMP>{%vMP%}</vMP>
+<cAdmC>{%cAdmC%}</cAdmC>
+</MP>
+<vTroco>{%vTroco%}</vTroco>
+</pgto>
+<infAdic>
+<infCpl>{%infCpl%}</infCpl>
+</infAdic>
+<obsFisco xCampo="{%xCampo%}" xTexto="{%xTexto%}">
+<xTexto>Comete crime quem sonega</xTexto>
+</obsFisco>
+</infCFe>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></CanonicalizationMethod>
+<SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"></SignatureMethod>
+<Reference URI="#CFe35241006346545001536590011973410076397299542">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"></Transform>
+<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></Transform>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
+<DigestValue>vj9iloy3YHbPBfe772FmBLrCuxmS+ukUl5TRYi6IkDQ=</DigestValue>
+</Reference>
+</SignedInfo>
+<SignatureValue>c1O1OPEniN+1KmSwaFo4Gm5kY+7XXcT3t2IQL7ABhtso8t9Fhr0/L8DOmEubl+BC8neCg==</SignatureValue>
+<KeyInfo>
+<X509Data>
+<X509Certificate>MIIGlTCCBH/cA7VwqtdjZcs</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature>
+</CFe>`
+
+const NFCeXMLMock = `<?xml version="1.0" encoding="utf-8"?>
+<nfeProc versao="4.00" xmlns="http://www.portalfiscal.inf.br/nfe">
+  <NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+    <infNFe Id="NFe{%accessKey%}" versao="4.00">
+      <ide>
+        <cUF>{%cUF%}</cUF>
+        <cNF>{%cNF%}</cNF>
+        <natOp>{%natOp%}</natOp>
+        <mod>65</mod>
+        <serie>{%serie%}</serie>
+        <nNF>{%nNF%}</nNF>
+        <dhEmi>{%dhEmi%}</dhEmi>
+        <tpNF>{%tpNF%}</tpNF>
+        <idDest>{%idDest%}</idDest>
+        <cMunFG>{%cMunFG%}</cMunFG>
+        <tpImp>{%tpImp%}</tpImp>
+        <tpEmis>{%tpEmis%}</tpEmis>
+        <cDV>{%cDV%}</cDV>
+        <tpAmb>{%tpAmb%}</tpAmb>
+        <finNFe>{%finNFe%}</finNFe>
+        <indFinal>{%indFinal%}</indFinal>
+        <indPres>{%indPres%}</indPres>
+        <indIntermed>{%indIntermed%}</indIntermed>
+        <procEmi>{%procEmi%}</procEmi>
+        <verProc>{%verProc%}</verProc>
+      </ide>
+      <emit>
+        <CNPJ>{%emitCNPJ%}</CNPJ>
+        <xNome>{%emitXNome%}</xNome>
+        <enderEmit>
+          <xLgr>{%xLgr%}</xLgr>
+          <nro>{%nro%}</nro>
+          <xCpl>{%xCpl%}</xCpl>
+          <xBairro>{%xBairro%}</xBairro>
+          <cMun>{%cMun%}</cMun>
+          <xMun>{%xMun%}</xMun>
+          <UF>{%UF%}</UF>
+          <CEP>{%CEP%}</CEP>
+          <cPais>{%cPais%}</cPais>
+          <xPais>{%xPais%}</xPais>
+          <fone>{%fone%}</fone>
+        </enderEmit>
+        <IE>{%IE%}</IE>
+        <CRT>{%CRT%}</CRT>
+      </emit>
+      <dest>
+        <CPF>{%CPF%}</CPF>
+        <xNome>{%destXNome%}</xNome>
+        <enderDest>
+          <xLgr>{%xLgrDest%}</xLgr>
+          <nro>{%nroDest%}</nro>
+          <xCpl>{%xCplDest%}</xCpl>
+          <xBairro>{%xBairroDest%}</xBairro>
+          <cMun>{%cMunDest%}</cMun>
+          <xMun>{%xMunDest%}</xMun>
+          <UF>{%UFDest%}</UF>
+          <CEP>{%CEPDest%}</CEP>
+          <cPais>{%cPaisDest%}</cPais>
+          <xPais>{%xPaisDest%}</xPais>
+          <fone>{%foneDest%}</fone>
+        </enderDest>
+        <indIEDest>{%indIEDest%}</indIEDest>
+        <email>{%email%}</email>
+      </dest>
+      <det nItem="{%nItem%}">
+        <prod>
+          <cProd>{%cProd%}</cProd>
+          <cEAN>{%cEAN%}</cEAN>
+          <xProd>{%xProd%}</xProd>
+          <NCM>{%NCM%}</NCM>
+          <CFOP>{%CFOP%}</CFOP>
+          <uCom>{%uCom%}</uCom>
+          <qCom>{%qCom%}</qCom>
+          <vUnCom>{%vUnCom%}</vUnCom>
+          <vProd>{%vProd%}</vProd>
+          <cEANTrib>{%cEANTrib%}</cEANTrib>
+          <uTrib>{%uTrib%}</uTrib>
+          <qTrib>{%qTrib%}</qTrib>
+          <vUnTrib>{%vUnTrib%}</vUnTrib>
+          <vDesc>{%vDesc%}</vDesc>
+          <indTot>{%indTot%}</indTot>
+        </prod>
+        <imposto>
+          <vTotTrib>{%vTotTrib%}</vTotTrib>
+          <ICMS>
+            <ICMSSN102>
+              <orig>{%orig%}</orig>
+              <CSOSN>{%CSOSN%}</CSOSN>
+            </ICMSSN102>
+          </ICMS>
+          <PIS>
+            <PISOutr>
+              <CST>{%CST_PIS%}</CST>
+              <vBC>{%vBC_PIS%}</vBC>
+              <pPIS>{%pPIS%}</pPIS>
+              <vPIS>{%vPIS%}</vPIS>
+            </PISOutr>
+          </PIS>
+          <COFINS>
+            <COFINSOutr>
+              <CST>{%CST_COFINS%}</CST>
+              <vBC>{%vBC_COFINS%}</vBC>
+              <pCOFINS>{%pCOFINS%}</pCOFINS>
+              <vCOFINS>{%vCOFINS%}</vCOFINS>
+            </COFINSOutr>
+          </COFINS>
+        </imposto>
+        <infAdProd>{%infAdProd%}</infAdProd>
+      </det>
+      <total>
+        <ICMSTot>
+          <vBC>{%vBC_total%}</vBC>
+          <vICMS>{%vICMS_total%}</vICMS>
+          <vICMSDeson>{%vICMSDeson%}</vICMSDeson>
+          <vFCP>{%vFCP%}</vFCP>
+          <vBCST>{%vBCST%}</vBCST>
+          <vST>{%vST%}</vST>
+          <vFCPST>{%vFCPST%}</vFCPST>
+          <vFCPSTRet>{%vFCPSTRet%}</vFCPSTRet>
+          <vProd>{%vProd_total%}</vProd>
+          <vFrete>{%vFrete%}</vFrete>
+          <vSeg>{%vSeg%}</vSeg>
+          <vDesc>{%vDesc_total%}</vDesc>
+          <vII>{%vII%}</vII>
+          <vIPI>{%vIPI%}</vIPI>
+          <vIPIDevol>{%vIPIDevol%}</vIPIDevol>
+          <vPIS>{%vPIS_total%}</vPIS>
+          <vCOFINS>{%vCOFINS_total%}</vCOFINS>
+          <vOutro>{%vOutro%}</vOutro>
+          <vNF>{%vNF%}</vNF>
+          <vTotTrib>{%vTotTrib_total%}</vTotTrib>
+        </ICMSTot>
+      </total>
+      <transp>
+        <modFrete>{%modFrete%}</modFrete>
+      </transp>
+      <pag>
+        <detPag>
+          <tPag>{%tPag%}</tPag>
+          <vPag>{%vPag%}</vPag>
+          <card>
+            <tpIntegra>{%tpIntegra%}</tpIntegra>
+            <CNPJ>{%cardCNPJ%}</CNPJ>
+            <tBand>{%tBand%}</tBand>
+            <cAut>{%cAut%}</cAut>
+          </card>
+        </detPag>
+      </pag>
+      <infAdic>
+        <infCpl>{%infCpl%}</infCpl>
+      </infAdic>
+      <infRespTec>
+        <CNPJ>{%infRespTecCNPJ%}</CNPJ>
+        <xContato>{%infRespTecXContato%}</xContato>
+        <email>{%infRespTecEmail%}</email>
+        <fone>{%infRespTecFone%}</fone>
+      </infRespTec>
+    </infNFe>
+    <infNFeSupl>
+      <qrCode><![CDATA[{%qrCode%}]]></qrCode>
+      <urlChave>{%urlChave%}</urlChave>
+    </infNFeSupl>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+      <SignedInfo>
+        <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+        <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+        <Reference URI="#NFe{%accessKey%}">
+          <Transforms>
+            <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+            <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+          </Transforms>
+          <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+          <DigestValue>{%DigestValue%}</DigestValue>
+        </Reference>
+      </SignedInfo>
+      <SignatureValue>{%SignatureValue%}</SignatureValue>
+      <KeyInfo>
+        <X509Data>
+          <X509Certificate><![CDATA[{%X509Certificate%}]]></X509Certificate>
+        </X509Data>
+      </KeyInfo>
+    </Signature>
+  </NFe>
+  <protNFe versao="4.00" xmlns="http://www.portalfiscal.inf.br/nfe">
+    <infProt>
+      <tpAmb>{%tpAmbProt%}</tpAmb>
+      <verAplic>{%verAplic%}</verAplic>
+      <chNFe>{%chNFe%}</chNFe>
+      <dhRecbto>{%dhRecbto%}</dhRecbto>
+      <nProt>{%nProt%}</nProt>
+      <digVal>{%digVal%}</digVal>
+      <cStat>{%cStat%}</cStat>
+      <xMotivo>{%xMotivo%}</xMotivo>
+    </infProt>
+  </protNFe>
+</nfeProc>`
+
+const NFeDevolucaoXMLMock = `<?xml version="1.0" encoding="UTF-8"?>
+<nfeProc xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">
+  <NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+    <infNFe versao="4.00" Id="NFe{%accessKey%}">
+      <ide>
+        <cUF>{%cUF%}</cUF>
+        <cNF>{%cNF%}</cNF>
+        <natOp>{%natOp%}</natOp>
+        <mod>55</mod>
+        <serie>55</serie>
+        <nNF>{%nNF%}</nNF>
+        <dhEmi>{%dhEmi%}</dhEmi>
+        <dhSaiEnt>{%dhSaiEnt%}</dhSaiEnt>
+        <tpNF>{%tpNF%}</tpNF>
+        <idDest>{%idDest%}</idDest>
+        <cMunFG>{%cMunFG%}</cMunFG>
+        <tpImp>{%tpImp%}</tpImp>
+        <tpEmis>{%tpEmis%}</tpEmis>
+        <cDV>{%cDV%}</cDV>
+        <tpAmb>{%tpAmb%}</tpAmb>
+        <finNFe>{%finNFe%}</finNFe>
+        <indFinal>{%indFinal%}</indFinal>
+        <indPres>{%indPres%}</indPres>
+        <indIntermed>{%indIntermed%}</indIntermed>
+        <procEmi>{%procEmi%}</procEmi>
+        <verProc>{%verProc%}</verProc>
+      </ide>
+      <emit>
+        <CNPJ>{%emitCNPJ%}</CNPJ>
+        <xNome>{%emitXNome%}</xNome>
+        <xFant>{%emitXFant%}</xFant>
+        <enderEmit>
+          <xLgr>{%xLgr%}</xLgr>
+          <nro>{%nro%}</nro>
+          <xCpl>{%xCpl%}</xCpl>
+          <xBairro>{%xBairro%}</xBairro>
+          <cMun>{%cMun%}</cMun>
+          <xMun>{%xMun%}</xMun>
+          <UF>{%UF%}</UF>
+          <CEP>{%CEP%}</CEP>
+          <cPais>{%cPais%}</cPais>
+          <xPais>{%xPais%}</xPais>
+          <fone>{%fone%}</fone>
+        </enderEmit>
+        <IE>{%IE%}</IE>
+        <CRT>{%CRT%}</CRT>
+      </emit>
+      <dest>
+        <CPF>{%CPF%}</CPF>
+        <xNome>{%destXNome%}</xNome>
+        <enderDest>
+          <xLgr>{%xLgrDest%}</xLgr>
+          <nro>{%nroDest%}</nro>
+          <xCpl>{%xCplDest%}</xCpl>
+          <xBairro>{%xBairroDest%}</xBairro>
+          <cMun>{%cMunDest%}</cMun>
+          <xMun>{%xMunDest%}</xMun>
+          <UF>{%UFDest%}</UF>
+          <CEP>{%CEPDest%}</CEP>
+          <cPais>{%cPaisDest%}</cPais>
+          <xPais>{%xPaisDest%}</xPais>
+          <fone>{%foneDest%}</fone>
+        </enderDest>
+        <indIEDest>{%indIEDest%}</indIEDest>
+      </dest>
+      <det nItem="{%nItem%}">
+        <prod>
+          <cProd>{%cProd%}</cProd>
+          <cEAN>{%cEAN%}</cEAN>
+          <xProd>{%xProd%}</xProd>
+          <NCM>{%NCM%}</NCM>
+          <CEST>{%CEST%}</CEST>
+          <CFOP>{%CFOP%}</CFOP>
+          <uCom>{%uCom%}</uCom>
+          <qCom>{%qCom%}</qCom>
+          <vUnCom>{%vUnCom%}</vUnCom>
+          <vProd>{%vProd%}</vProd>
+          <cEANTrib>{%cEANTrib%}</cEANTrib>
+          <uTrib>{%uTrib%}</uTrib>
+          <qTrib>{%qTrib%}</qTrib>
+          <vUnTrib>{%vUnTrib%}</vUnTrib>
+          <indTot>{%indTot%}</indTot>
+        </prod>
+        <imposto>
+          <vTotTrib>{%vTotTrib%}</vTotTrib>
+          <ICMS>
+            <ICMSSN102>
+              <orig>{%orig%}</orig>
+              <CSOSN>{%CSOSN%}</CSOSN>
+            </ICMSSN102>
+          </ICMS>
+          <IPI>
+            <cEnq>{%cEnq%}</cEnq>
+            <IPITrib>
+              <CST>{%CST_IPI%}</CST>
+              <vBC>{%vBC_IPI%}</vBC>
+              <pIPI>{%pIPI%}</pIPI>
+              <vIPI>{%vIPI%}</vIPI>
+            </IPITrib>
+          </IPI>
+          <PIS>
+            <PISOutr>
+              <CST>{%CST_PIS%}</CST>
+              <vBC>{%vBC_PIS%}</vBC>
+              <pPIS>{%pPIS%}</pPIS>
+              <vPIS>{%vPIS%}</vPIS>
+            </PISOutr>
+          </PIS>
+          <COFINS>
+            <COFINSOutr>
+              <CST>{%CST_COFINS%}</CST>
+              <vBC>{%vBC_COFINS%}</vBC>
+              <pCOFINS>{%pCOFINS%}</pCOFINS>
+              <vCOFINS>{%vCOFINS%}</vCOFINS>
+            </COFINSOutr>
+          </COFINS>
+        </imposto>
+        <impostoDevol>
+          <pDevol>{%pDevol%}</pDevol>
+          <IPI>
+            <vIPIDevol>{%vIPIDevol%}</vIPIDevol>
+          </IPI>
+        </impostoDevol>
+        <infAdProd>{%infAdProd%}</infAdProd>
+      </det>
+      <total>
+        <ICMSTot>
+          <vBC>{%vBC_total%}</vBC>
+          <vICMS>{%vICMS_total%}</vICMS>
+          <vICMSDeson>{%vICMSDeson%}</vICMSDeson>
+          <vFCPUFDest>{%vFCPUFDest%}</vFCPUFDest>
+          <vICMSUFDest>{%vICMSUFDest%}</vICMSUFDest>
+          <vICMSUFRemet>{%vICMSUFRemet%}</vICMSUFRemet>
+          <vFCP>{%vFCP%}</vFCP>
+          <vBCST>{%vBCST%}</vBCST>
+          <vST>{%vST%}</vST>
+          <vFCPST>{%vFCPST%}</vFCPST>
+          <vFCPSTRet>{%vFCPSTRet%}</vFCPSTRet>
+          <vProd>{%vProd_total%}</vProd>
+          <vFrete>{%vFrete%}</vFrete>
+          <vSeg>{%vSeg%}</vSeg>
+          <vDesc>{%vDesc_total%}</vDesc>
+          <vII>{%vII%}</vII>
+          <vIPI>{%vIPI_total%}</vIPI>
+          <vIPIDevol>{%vIPIDevol_total%}</vIPIDevol>
+          <vPIS>{%vPIS_total%}</vPIS>
+          <vCOFINS>{%vCOFINS_total%}</vCOFINS>
+          <vOutro>{%vOutro%}</vOutro>
+          <vNF>{%vNF%}</vNF>
+          <vTotTrib>{%vTotTrib_total%}</vTotTrib>
+        </ICMSTot>
+      </total>
+      <transp>
+        <modFrete>{%modFrete%}</modFrete>
+        <vol>
+          <qVol>{%qVol%}</qVol>
+        </vol>
+      </transp>
+      <pag>
+        <detPag>
+          <tPag>{%tPag%}</tPag>
+          <vPag>{%vPag%}</vPag>
+          <card>
+            <tpIntegra>{%tpIntegra%}</tpIntegra>
+            <CNPJ>{%cardCNPJ%}</CNPJ>
+            <tBand>{%tBand%}</tBand>
+            <cAut>{%cAut%}</cAut>
+          </card>
+        </detPag>
+      </pag>
+      <infAdic>
+        <infAdFisco>{%infAdFisco%}</infAdFisco>
+      </infAdic>
+      <infRespTec>
+        <CNPJ>{%infRespTecCNPJ%}</CNPJ>
+        <xContato>{%infRespTecXContato%}</xContato>
+        <email>{%infRespTecEmail%}</email>
+        <fone>{%infRespTecFone%}</fone>
+      </infRespTec>
+    </infNFe>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+      <SignedInfo>
+        <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+        <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+        <Reference URI="#NFe{%accessKey%}">
+          <Transforms>
+            <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+            <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+          </Transforms>
+          <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+          <DigestValue>{%DigestValue%}</DigestValue>
+        </Reference>
+      </SignedInfo>
+      <SignatureValue>{%SignatureValue%}</SignatureValue>
+      <KeyInfo>
+        <X509Data>
+          <X509Certificate>{%X509Certificate%}</X509Certificate>
+        </X509Data>
+      </KeyInfo>
+    </Signature>
+  </NFe>
+  <protNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">
+    <infProt>
+      <tpAmb>{%tpAmbProt%}</tpAmb>
+      <verAplic>{%verAplic%}</verAplic>
+      <chNFe>{%chNFe%}</chNFe>
+      <dhRecbto>{%dhRecbto%}</dhRecbto>
+      <nProt>{%nProt%}</nProt>
+      <digVal>{%digVal%}</digVal>
+      <cStat>{%cStat%}</cStat>
+      <xMotivo>{%xMotivo%}</xMotivo>
+    </infProt>
+  </protNFe>
+</nfeProc>`
+
+const NFeXMLMock = `<NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+<infNFe Id="NFe{%accessKey%}" versao="1.10">
+<ide>
+<cUF>{%cUF%}</cUF>
+<cNF>{%cNF%}</cNF>
+<natOp>{%natOp%}</natOp>
+<indPag>{%indPag%}</indPag>
+<mod>55</mod>
+<serie>{%serie%}</serie>
+<nNF>{%nNF%}</nNF>
+<dEmi>{%dEmi%}</dEmi>
+<dSaiEnt>{%dSaiEnt%}</dSaiEnt>
+<tpNF>{%tpNF%}</tpNF>
+<cMunFG>{%cMunFG%}</cMunFG>
+<tpImp>{%tpImp%}</tpImp>
+<tpEmis>{%tpEmis%}</tpEmis>
+<cDV>{%cDV%}</cDV>
+<tpAmb>{%tpAmb%}</tpAmb>
+<finNFe>{%finNFe%}</finNFe>
+<procEmi>{%procEmi%}</procEmi>
+<verProc>{%verProc%}</verProc>
+</ide>
+<emit>
+<CNPJ>{%emitCNPJ%}</CNPJ>
+<xNome>{%emitXNome%}</xNome>
+<xFant>{%emitXFant%}</xFant>
+<enderEmit>
+<xLgr>{%enderEmitXLgr%}</xLgr>
+<nro>{%enderEmitNro%}</nro>
+<xCpl>{%enderEmitXCpl%}</xCpl>
+<xBairro>{%enderEmitXBairro%}</xBairro>
+<cMun>{%enderEmitCMun%}</cMun>
+<xMun>{%enderEmitXMun%}</xMun>
+<UF>{%enderEmitUF%}</UF>
+<CEP>{%enderEmitCEP%}</CEP>
+<cPais>{%enderEmitCPais%}</cPais>
+<xPais>{%enderEmitXPais%}</xPais>
+<fone>{%enderEmitFone%}</fone>
+</enderEmit>
+<IE>{%emitIE%}</IE>
+</emit>
+<dest>
+<CNPJ>{%destCNPJ%}</CNPJ>
+<xNome>{%destXNome%}</xNome>
+<enderDest>
+<xLgr>{%enderDestXLgr%}</xLgr>
+<nro>{%enderDestNro%}</nro>
+<xCpl>{%enderDestXCpl%}</xCpl>
+<xBairro>{%enderDestXBairro%}</xBairro>
+<cMun>{%enderDestCMun%}</cMun>
+<xMun>{%enderDestXMun%}</xMun>
+<UF>{%enderDestUF%}</UF>
+<CEP>{%enderDestCEP%}</CEP>
+<cPais>{%enderDestCPais%}</cPais>
+<xPais>{%enderDestXPais%}</xPais>
+<fone>{%enderDestFone%}</fone>
+</enderDest>
+<IE>{%destIE%}</IE>
+</dest>
+<retirada>
+<CNPJ>{%retiradaCNPJ%}</CNPJ>
+<xLgr>{%retiradaXLgr%}</xLgr>
+<nro>{%retiradaNro%}</nro>
+<xCpl>{%retiradaXCpl%}</xCpl>
+<xBairro>{%retiradaXBairro%}</xBairro>
+<cMun>{%retiradaCMun%}</cMun>
+<xMun>{%retiradaXMun%}</xMun>
+<UF>{%retiradaUF%}</UF>
+</retirada>
+<entrega>
+<CNPJ>{%entregaCNPJ%}</CNPJ>
+<xLgr>{%entregaXLgr%}</xLgr>
+<nro>{%entregaNro%}</nro>
+<xCpl>{%entregaXCpl%}</xCpl>
+<xBairro>{%entregaXBairro%}</xBairro>
+<cMun>{%entregaCMun%}</cMun>
+<xMun>{%entregaXMun%}</xMun>
+<UF>{%entregaUF%}</UF>
+</entrega>
+<det nItem="{%detNItem%}">
+<prod>
+<cProd>{%detProdCProd%}</cProd>
+<cEAN>{%detProdCEAN%}</cEAN>
+<xProd>{%detProdXProd%}</xProd>
+<CFOP>{%detProdCFOP%}</CFOP>
+<uCom>{%detProdUCom%}</uCom>
+<qCom>{%detProdQCom%}</qCom>
+<vUnCom>{%detProdVUnCom%}</vUnCom>
+<vProd>{%detProdVProd%}</vProd>
+<cEANTrib>{%detProdCEANTrib%}</cEANTrib>
+<uTrib>{%detProdUTrib%}</uTrib>
+<qTrib>{%detProdQTrib%}</qTrib>
+<vUnTrib>{%detProdVUnTrib%}</vUnTrib>
+</prod>
+<imposto>
+<ICMS>
+<ICMS00>
+<orig>{%impostoICMS00orig%}</orig>
+<CST>{%impostoICMS00CST%}</CST>
+<modBC>{%impostoICMS00modBC%}</modBC>
+<vBC>{%impostoICMS00vBC%}</vBC>
+<pICMS>{%impostoICMS00pICMS%}</pICMS>
+<vICMS>{%impostoICMS00vICMS%}</vICMS>
+</ICMS00>
+</ICMS>
+<PIS>
+<PISAliq>
+<CST>{%impostoPISAliqCST%}</CST>
+<vBC>{%impostoPISAliqvBC%}</vBC>
+<pPIS>{%impostoPISAliqpPIS%}</pPIS>
+<vPIS>{%impostoPISAliqvPIS%}</vPIS>
+</PISAliq>
+</PIS>
+<COFINS>
+<COFINSAliq>
+<CST>{%impostoCOFINSAliqCST%}</CST>
+<vBC>{%impostoCOFINSAliqvBC%}</vBC>
+<pCOFINS>{%impostoCOFINSAliqpCOFINS%}</pCOFINS>
+<vCOFINS>{%impostoCOFINSAliqvCOFINS%}</vCOFINS>
+</COFINSAliq>
+</COFINS>
+</imposto>
+</det>
+<total>
+<ICMSTot>
+<vBC>{%totalICMSTotvBC%}</vBC>
+<vICMS>{%totalICMSTotvICMS%}</vICMS>
+<vBCST>{%totalICMSTotvBCST%}</vBCST>
+<vST>{%totalICMSTotvST%}</vST>
+<vProd>{%totalICMSTotvProd%}</vProd>
+<vFrete>{%totalICMSTotvFrete%}</vFrete>
+<vSeg>{%totalICMSTotvSeg%}</vSeg>
+<vDesc>{%totalICMSTotvDesc%}</vDesc>
+<vII>{%totalICMSTotvII%}</vII>
+<vIPI>{%totalICMSTotvIPI%}</vIPI>
+<vPIS>{%totalICMSTotvPIS%}</vPIS>
+<vCOFINS>{%totalICMSTotvCOFINS%}</vCOFINS>
+<vOutro>{%totalICMSTotvOutro%}</vOutro>
+<vNF>{%totalICMSTotvNF%}</vNF>
+</ICMSTot>
+</total>
+<transp>
+<modFrete>{%transpModFrete%}</modFrete>
+<transporta>
+<CNPJ>{%transpTransportaCNPJ%}</CNPJ>
+<xNome>{%transpTransportaXNome%}</xNome>
+<IE>{%transpTransportaIE%}</IE>
+<xEnder>{%transpTransportaXEnder%}</xEnder>
+<xMun>{%transpTransportaXMun%}</xMun>
+<UF>{%transpTransportaUF%}</UF>
+</transporta>
+<veicTransp>
+<placa>{%transpVeicTranspPlaca%}</placa>
+<UF>{%transpVeicTranspUF%}</UF>
+<RNTC>{%transpVeicTranspRNTC%}</RNTC>
+</veicTransp>
+<reboque>
+<placa>{%transpReboquePlaca%}</placa>
+<UF>{%transpReboqueUF%}</UF>
+<RNTC>{%transpReboqueRNTC%}</RNTC>
+</reboque>
+<vol>
+<qVol>{%transpVolQVol%}</qVol>
+<esp>{%transpVolEsp%}</esp>
+<marca>{%transpVolMarca%}</marca>
+<nVol>{%transpVolNVol%}</nVol>
+<pesoL>{%transpVolPesoL%}</pesoL>
+<pesoB>{%transpVolPesoB%}</pesoB>
+<lacres>
+<nLacre>{%transpVolLacresNLacre%}</nLacre>
+</lacres>
+</vol>
+</transp>
+<infAdic>
+<infAdFisco>{%infAdicInfAdFisco%}</infAdFisco>
+</infAdic>
+</infNFe>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></CanonicalizationMethod>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"></SignatureMethod>
+<Reference URI="#NFe{%accessKey%}">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"></Transform>
+<Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></Transform>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"></DigestMethod>
+<DigestValue>{%DigestValue%}</DigestValue>
+</Reference>
+</SignedInfo>
+<SignatureValue>{%SignatureValue%}</SignatureValue>
+<KeyInfo>
+<X509Data>
+<X509Certificate>{%X509Certificate%}</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature>
+</NFe>`

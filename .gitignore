@@ -1,0 +1,18 @@
+# Binaries
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Build directories
+/bin/
+/build/
+/dist/
+
+# Dependency directories
+/vendor/
+
+# IDE/editor files
+/.vscode/
+/.idea/
+*.log
