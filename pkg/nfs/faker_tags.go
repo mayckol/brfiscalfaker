@@ -30,7 +30,7 @@ func xLgr() string {
 
 // nro generates a mock number.
 func nro() string {
-	return string(rune(gofakeit.Number(1, 9999)))
+	return fmt.Sprintf("%s", strconv.Itoa(gofakeit.Number(1, 9999)))
 }
 
 // xCpl generates a mock complement.
@@ -80,17 +80,17 @@ func fone() string {
 
 // IE generates a mock State Registration.
 func IE() string {
-	return string(rune(gofakeit.Number(8, 12)))
+	return fmt.Sprintf("%s", strconv.Itoa(gofakeit.Number(10000, 99999)))
 }
 
 // CRT generates a mock Tax Regime code.
 func CRT() string {
-	return string(rune(gofakeit.Number(1, 3)))
+	return fmt.Sprintf("%s", strconv.Itoa(gofakeit.Number(1, 3)))
 }
 
 // indIEDest generates a mock indicator.
 func indIEDest() string {
-	return string(rune(gofakeit.Number(0, 2)))
+	return fmt.Sprintf("%s", strconv.Itoa(gofakeit.Number(0, 2)))
 }
 
 // email generates a mock email address.
