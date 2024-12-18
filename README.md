@@ -55,7 +55,7 @@ Run the application using the `go run command or the built binary.
 * **Generate an NF-e Invoice with Custom CPF and CNPJ:**
 
    ```bash
-    go run cmd/brfiscalfaker/main.go --type NF-e --cpf 12345678900 --cnpj 12345678901234
+    go run cmd/brfiscalfaker/main.go --type NFe --cpf 12345678900 --cnpj 12345678901234
     ```
 * **Generate a CFe Invoice with Blocked Tags:**
 
@@ -65,7 +65,7 @@ Run the application using the `go run command or the built binary.
 * **Generate an NFCe Invoice with Custom Data and Blocked Tags:**
 
    ```bash
-   go run cmd/brfiscalfaker/main.go --type NFC-e --cpf 12345678900 --cnpj 12345678901234 --block-tags "nItem, vProd"
+   go run cmd/brfiscalfaker/main.go --type NFCe --cpf 12345678900 --cnpj 12345678901234 --block-tags "nItem, vProd"
    ```
 
 ## Library Usage
@@ -149,7 +149,7 @@ You can also run the application using Docker.
    docker pull mayckol/brfiscalfaker:latest
    ```
    ```shell
-   docker run mayckol/brfiscalfaker --type NF-e --cpf 12345678900 --cnpj 12345678901234
+   docker run mayckol/brfiscalfaker --type NFe --cpf 12345678900 --cnpj 12345678901234
    ```
 
 ## Contributing
