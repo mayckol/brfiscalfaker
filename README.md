@@ -26,13 +26,13 @@ Ensure you have Go installed on your system (version 1.16 or higher).
 
    ```bash
    git clone https://github.com/mayckol/brfiscalfaker.git
-   cd brfiscalfaker
+   cd nfs
     ```
    
 2. **Build the Application:**
 
    ```bash
-   go build -o brfiscalfaker ./cmd/brfiscalfaker/main.go
+   go build -o nfs ./cmd/nfs/main.go
    ```
    
 ## Usage
@@ -50,22 +50,22 @@ Run the application using the `go run command or the built binary.
 * **Generate a Basic NFC-e Invoice:**
 
    ```bash
-   go run cmd/brfiscalfaker/main.go
+   go run cmd/nfs/main.go
    ```
 * **Generate an NF-e Invoice with Custom CPF and CNPJ:**
 
    ```bash
-    go run cmd/brfiscalfaker/main.go --type NFe --cpf 12345678900 --cnpj 12345678901234
+    go run cmd/nfs/main.go --type NFe --cpf 12345678900 --cnpj 12345678901234
     ```
 * **Generate a CFe Invoice with Blocked Tags:**
 
    ```bash
-   go run cmd/brfiscalfaker/main.go --type CFe --block-tags "nItem, vProd"
+   go run cmd/nfs/main.go --type CFe --block-tags "nItem, vProd"
    ```
 * **Generate an NFCe Invoice with Custom Data and Blocked Tags:**
 
    ```bash
-   go run cmd/brfiscalfaker/main.go --type NFCe --cpf 12345678900 --cnpj 12345678901234 --block-tags "nItem, vProd"
+   go run cmd/nfs/main.go --type NFCe --cpf 12345678900 --cnpj 12345678901234 --block-tags "nItem, vProd"
    ```
 
 ## Library Usage
@@ -73,7 +73,7 @@ Run the application using the `go run command or the built binary.
 ### Download the Library
 
 ```bash
-go get github.com/mayckol/brfiscalfaker
+go get github.com/mayckol/nfs
 ```
 ### Create a Template Generator
 * **Random CNPJ, CPF, and Access Key Generation:**
@@ -112,7 +112,7 @@ package main
 
 import (
    "log"
-   "github.com/mayckol/brfiscalfaker/pkg/brfiscalfaker"
+   "github.com/mayckol/brfiscalfaker/pkg/nfs"
    "fmt"
 )
 
@@ -146,10 +146,10 @@ func main() {
 
 You can also run the application using Docker.
    ```shell
-   docker pull mayckol/brfiscalfaker:latest
+   docker pull mayckol/nfs:latest
    ```
    ```shell
-   docker run mayckol/brfiscalfaker --type NFe --cpf 12345678900 --cnpj 12345678901234
+   docker run mayckol/nfs --type NFe --cpf 12345678900 --cnpj 12345678901234
    ```
 
 ## Contributing

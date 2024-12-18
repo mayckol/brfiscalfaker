@@ -1,4 +1,4 @@
-package brfiscalfaker
+package nfs
 
 import (
 	"strings"

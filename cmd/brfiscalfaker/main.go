@@ -1,11 +1,10 @@
-// cmd/main.go
-
+// Description: Command-line tool to generate fake Brazilian fiscal invoices.
 package main
 
 import (
 	"flag"
 	"fmt"
-	"github.com/mayckol/brfiscalfaker/pkg/brfiscalfaker"
+	"github.com/mayckol/brfiscalfaker/pkg/nfs"
 	"log"
 	"os"
 	"strings"
@@ -21,41 +20,41 @@ func main() {
 
 	flag.Parse()
 
-	var tt brfiscalfaker.TemplateType
+	var tt nfs.TemplateType
 	switch *templateType {
 	case "CFe":
-		tt = brfiscalfaker.CFe
+		tt = nfs.CFe
 	case "NFe":
-		tt = brfiscalfaker.NFe
+		tt = nfs.NFe
 	case "NFCe":
-		tt = brfiscalfaker.NFCe
+		tt = nfs.NFCe
 	case "NFeDevolucao":
-		tt = brfiscalfaker.NFeDevolucao
+		tt = nfs.NFeDevolucao
 	default:
 		log.Fatalf("Unsupported template type: %s", *templateType)
 	}
 
 	// Create the generator
-	generator, err := brfiscalfaker.NewTemplateGenerator(tt)
+	generator, err := nfs.NewTemplateGenerator(tt)
 	if err != nil {
 		log.Fatalf("Failed to create generator: %v", err)
 	}
 
 	// Prepare options
-	var options []brfiscalfaker.Option
+	var options []nfs.Option
 	if *cpf != "" {
-		option := brfiscalfaker.WithCPF(*cpf)
+		option := nfs.WithCPF(*cpf)
 		options = append(options, option)
 	}
 	if *cnpj != "" {
-		option := brfiscalfaker.WithCNPJ(*cnpj)
+		option := nfs.WithCNPJ(*cnpj)
 		options = append(options, option)
 	}
 	if *blockTags != "" {
 		// Split the blockTags by comma and trim any whitespace
 		tags := splitAndTrim(*blockTags, ",")
 		if len(tags) > 0 {
-			options = append(options, brfiscalfaker.WithBlockedPlaceholders(tags...))
+			options = append(options, nfs.WithBlockedPlaceholders(tags...))
 		}
 	}
 

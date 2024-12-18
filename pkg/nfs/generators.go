@@ -1,4 +1,4 @@
-package brfiscalfaker
+package nfs
 
 // NFeGenerator generates a standard NFe XML.
 type NFeGenerator struct {

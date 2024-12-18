@@ -20,7 +20,7 @@ COPY . .
 # Build the application for multiple platforms
 ARG TARGETOS
 ARG TARGETARCH
-RUN GOOS=$TARGETOS GOARCH=$TARGETARCH go build -o /output/brfiscalfaker ./cmd/brfiscalfaker
+RUN GOOS=$TARGETOS GOARCH=$TARGETARCH go build -o /output/nfs ./cmd/nfs
 
 # Stage 2: Create the final image
 FROM alpine:latest

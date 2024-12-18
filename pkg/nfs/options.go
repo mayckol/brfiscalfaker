@@ -1,4 +1,4 @@
-package brfiscalfaker
+package nfs
 
 // Option defines a function type for generator configuration options.
 type Option func(*generationConfig)
