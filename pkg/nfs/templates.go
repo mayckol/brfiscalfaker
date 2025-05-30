@@ -553,7 +553,7 @@ const NFeXMLMock = `<NFe xmlns="http://www.portalfiscal.inf.br/nfe">
 <mod>55</mod>
 <serie>{%serie%}</serie>
 <nNF>{%nNF%}</nNF>
-<dEmi>{%dEmi%}</dEmi>
+<dhEmi>{%dhEmi%}</dhEmi>
 <dSaiEnt>{%dSaiEnt%}</dSaiEnt>
 <tpNF>{%tpNF%}</tpNF>
 <cMunFG>{%cMunFG%}</cMunFG>
