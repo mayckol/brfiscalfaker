@@ -75,6 +75,33 @@ Run the application using the `go run command or the built binary.
 ```bash
 go get github.com/mayckol/brfiscalfaker
 ```
+
+### Testing Utilities
+
+For test code, use the convenient test helper from the nfs package:
+
+```go
+package mypackage_test
+
+import (
+    "testing"
+    "github.com/mayckol/brfiscalfaker/pkg/nfs"
+)
+
+func TestInvoiceProcessing(t *testing.T) {
+    // Generate a valid NFe XML for testing
+    xml := nfs.GenerateValidInvoiceXML(t, nfs.NFe)
+
+    // Or with custom options
+    xml = nfs.GenerateValidInvoiceXML(t, nfs.NFCe,
+        nfs.WithCPF("12345678900"),
+        nfs.WithCNPJ("12345678901234"),
+    )
+
+    // Use the XML in your tests...
+}
+```
+
 ### Create a Template Generator
 * **Random CNPJ, CPF, and Access Key Generation:**
 
@@ -120,8 +147,8 @@ func main() {
    // Define the desired template type
    templateType := nfs.NFCe
 
-   // Create the generator
-   generator, err := nfs.NewTemplateGenerator(templateType)
+   // Create the generator using the helper
+   generator, err := nfs.CreateTemplateGenerator(templateType)
    if err != nil {
       log.Fatalf("Failed to create generator: %v", err)
    }

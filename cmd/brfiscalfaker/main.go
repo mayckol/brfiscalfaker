@@ -4,10 +4,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/mayckol/brfiscalfaker/pkg/nfs"
 	"log"
 	"os"
 	"strings"
+
+	"github.com/mayckol/brfiscalfaker/pkg/nfs"
 
 	"golang.org/x/term"
 )

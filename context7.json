@@ -1,0 +1,48 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "BrFiscalFaker",
+  "description": "Go library for generating mock Brazilian fiscal invoices (NF-e, NFC-e, CFe, NFeDevolucao) with valid CPF, CNPJ, and Access Key generation for testing purposes",
+  "folders": ["pkg", "cmd"],
+  "excludeFolders": [
+    "internal",
+    "utils",
+    ".git",
+    ".github",
+    ".idea",
+    "node_modules",
+    "**/vendor",
+    "**/test",
+    "**/*_test.go"
+  ],
+  "excludeFiles": [
+    "LICENSE",
+    "LICENSE.md",
+    "go.mod",
+    "go.sum"
+  ],
+  "rules": [
+    "Use nfs.CreateTemplateGenerator() to create invoice generators with error handling, or nfs.MustCreateTemplateGenerator() for guaranteed valid types",
+    "Use br_documents.CPF(), br_documents.CNPJ(), and br_documents.AccessKey() for generating valid Brazilian fiscal identifiers",
+    "Pass options using nfs.WithCPF() and nfs.WithCNPJ() to customize generated invoices",
+    "Use nfs.WithBlockedPlaceholders() to exclude specific XML tags from generated invoices",
+    "Template types available: nfs.NFe, nfs.NFCe, nfs.CFe, nfs.NFeDevolucao"
+  ],
+  "previousVersions": [
+    {
+      "tag": "v1.1.1",
+      "title": "version 1.1.1"
+    },
+    {
+      "tag": "v1.1.0",
+      "title": "version 1.1.0"
+    },
+    {
+      "tag": "v1.0.10",
+      "title": "version 1.0.10"
+    },
+    {
+      "tag": "v1.0.9",
+      "title": "version 1.0.9"
+    }
+  ]
+}

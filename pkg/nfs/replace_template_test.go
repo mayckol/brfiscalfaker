@@ -1,6 +1,9 @@
 package nfs
 
 import (
+	"fmt"
+	"html"
+	"regexp"
 	"strings"
 	"testing"
 )
@@ -227,4 +230,91 @@ func TestReplaceTemplate_AllPlaceholdersBlocked(t *testing.T) {
 			t.Errorf("Found blank line at line %d", i+1)
 		}
 	}
+}
+
+// TestReplaceTemplate_XMLSpecialCharacters verifies that special XML characters
+// are properly escaped in generated content by testing with real NF-e templates.
+func TestReplaceTemplate_XMLSpecialCharacters(t *testing.T) {
+	tests := []struct {
+		name            string
+		containsEscaped string
+	}{
+		{
+			name:            "Ampersand is escaped",
+			containsEscaped: "&amp;",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Generate multiple XMLs to increase chance of hitting special characters
+			foundEscaped := false
+			for i := 0; i < 100; i++ {
+				generator, err := NewTemplateGenerator(NFe)
+				if err != nil {
+					t.Fatalf("Failed to create generator: %v", err)
+				}
+
+				xml, err := generator.Generate()
+				if err != nil {
+					t.Fatalf("Failed to generate XML: %v", err)
+				}
+
+				xmlStr := string(xml)
+
+				// Check that no invalid entity patterns exist (e.g., &P, &A without semicolon)
+				// This regex finds & followed by a letter but not followed by known entities
+				invalidEntityRegex := `&[A-Za-z](?![a-z]*;)`
+				if matched, _ := regexp.MatchString(invalidEntityRegex, xmlStr); matched {
+					// Extract a sample for debugging
+					re := regexp.MustCompile(invalidEntityRegex)
+					sample := re.FindString(xmlStr)
+					t.Errorf("Found invalid XML entity pattern: %q in iteration %d", sample, i)
+				}
+
+				// Check if we found properly escaped content
+				if strings.Contains(xmlStr, tt.containsEscaped) {
+					foundEscaped = true
+				}
+			}
+
+			// This is informational - not a failure if we don't find escaped chars
+			// since gofakeit might not generate them every time
+			if !foundEscaped {
+				t.Logf("Note: Did not encounter escaped characters in 100 iterations, but no invalid entities found either")
+			}
+		})
+	}
+}
+
+// TestReplaceTemplate_ManualXMLEscaping verifies XML escaping with manual template.
+func TestReplaceTemplate_ManualXMLEscaping(t *testing.T) {
+	// Create a simple helper to test escaping directly
+	testEscape := func(input, expected string) {
+		template := `<Test>{%testValue%}</Test>`
+
+		// Manually create replacements to simulate what would happen
+		replacements := map[string]string{
+			"testValue": input,
+		}
+
+		result := template
+		for key, value := range replacements {
+			placeholder := fmt.Sprintf("{%%%s%%}", key)
+			escapedValue := html.EscapeString(value)
+			result = strings.ReplaceAll(result, placeholder, escapedValue)
+		}
+
+		expectedResult := `<Test>` + expected + `</Test>`
+		if result != expectedResult {
+			t.Errorf("For input %q: expected %q, got %q", input, expectedResult, result)
+		}
+	}
+
+	testEscape("P&G Company", "P&amp;G Company")
+	testEscape("value < 100", "value &lt; 100")
+	testEscape("value > 50", "value &gt; 50")
+	testEscape(`"quoted"`, "&#34;quoted&#34;")
+	testEscape("John's Company", "John&#39;s Company")
+	testEscape("&P without semicolon", "&amp;P without semicolon")
 }

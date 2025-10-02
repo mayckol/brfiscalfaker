@@ -3,6 +3,7 @@ package nfs
 import (
 	"fmt"
 	"github.com/mayckol/brfiscalfaker/pkg/br_documents"
+	"html"
 	"log"
 	"regexp"
 	"strings"
@@ -98,7 +99,8 @@ func ReplaceTemplate(template string, options ...Option) ([]byte, error) {
 	result := template
 	for key, value := range replacements {
 		placeholder := fmt.Sprintf("{%%%s%%}", key)
-		result = strings.ReplaceAll(result, placeholder, value)
+		escapedValue := html.EscapeString(value)
+		result = strings.ReplaceAll(result, placeholder, escapedValue)
 	}
 
 	// Remove entire XML tags that correspond to blocked placeholders,
