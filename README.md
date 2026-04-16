@@ -169,6 +169,121 @@ func main() {
 
 ```
 
+### Alphanumeric CNPJ (v2) — July 2026 Format
+
+Brazil's new alphanumeric CNPJ format becomes effective in July 2026. This package includes a v2 module with full support for the new Módulo 11 algorithm with dual check digits.
+
+**v2 Features:**
+- 14-character alphanumeric CNPJ format (8 root + 4 branch + 2 numeric check digits)
+- Automatic check digit calculation using Módulo 11 with specified weight arrays
+- Input validation for both numeric (legacy) and alphanumeric (new) formats
+- Configurable character set (blacklist I, O, Q, U, F by default to avoid visual ambiguity)
+- Masked format support: `XX.XXX.XXX/YYYY-ZZ`
+
+**Generate Raw Alphanumeric CNPJ:**
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/mayckol/brfiscalfaker/pkg/br_documents/v2"
+)
+
+func main() {
+	// Generate a valid raw alphanumeric CNPJ
+	cnpj := v2.CNPJ()
+	fmt.Println("CNPJ:", cnpj) // Output: AB1CD2E3F4GH90
+}
+```
+
+**Generate Masked CNPJ:**
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/mayckol/brfiscalfaker/pkg/br_documents/v2"
+)
+
+func main() {
+	// Generate a masked alphanumeric CNPJ
+	cnpj := v2.CNPJ(v2.CNPJv2Config{Masked: true})
+	fmt.Println("CNPJ:", cnpj) // Output: AB.1CD.2E3/F4GH-90
+}
+```
+
+**Allow Ambiguous Letters (I, O, Q, U, F):**
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/mayckol/brfiscalfaker/pkg/br_documents/v2"
+)
+
+func main() {
+	// Generate CNPJ allowing previously blacklisted letters
+	cnpj := v2.CNPJ(v2.CNPJv2Config{AllowAmbiguousLetters: true})
+	fmt.Println("CNPJ:", cnpj) // May contain I, O, Q, U, or F
+	
+	// Combine with masked format
+	maskedCNPJ := v2.CNPJ(v2.CNPJv2Config{
+		Masked:                true,
+		AllowAmbiguousLetters: true,
+	})
+	fmt.Println("Masked CNPJ:", maskedCNPJ)
+}
+```
+
+**Validate CNPJ (v1 and v2 formats):**
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/mayckol/brfiscalfaker/pkg/br_documents/v2"
+)
+
+func main() {
+	// Validate alphanumeric CNPJ
+	cnpj := v2.CNPJ()
+	if v2.ValidateCNPJ(cnpj) {
+		fmt.Println("Valid CNPJ:", cnpj)
+	}
+	
+	// Validate masked CNPJ (automatically sanitized)
+	maskedCNPJ := "AB.1CD.2E3/F4GH-90"
+	if v2.ValidateCNPJ(maskedCNPJ) {
+		fmt.Println("Valid masked CNPJ")
+	}
+	
+	// Backward compatibility: numeric-only CNPJs also validate
+	numericCNPJ := "12345678901234"
+	if v2.ValidateCNPJ(numericCNPJ) {
+		fmt.Println("Valid numeric CNPJ (backward compatible)")
+	}
+}
+```
+
+**Parameters:**
+
+- **v2.CNPJ()**
+  - **Config** (`CNPJv2Config`): Optional parameter to customize generation.
+    - `Masked`: `bool`. If `true`, format as `XX.XXX.XXX/YYYY-ZZ`. Default is `false` (raw 14 characters).
+    - `AllowAmbiguousLetters`: `bool`. If `true`, allow letters I, O, Q, U, F in generation. Default is `false` (excluded to reduce visual ambiguity).
+
+- **v2.ValidateCNPJ()**
+  - Accepts both raw and masked formats.
+  - Handles mixed case and whitespace automatically.
+  - Returns `true` if CNPJ passes structural and algorithmic validation (check digits).
+  - Works with both numeric (legacy) and alphanumeric (v2) formats.
+
+**Status:** This module is ready for testing and development. The new alphanumeric CNPJ format becomes official in July 2026.
+
 ## Docker
 
 You can also run the application using Docker.
