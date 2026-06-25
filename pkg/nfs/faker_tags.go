@@ -811,9 +811,25 @@ func detProdXProd() string {
 	return gofakeit.ProductName()
 }
 
-// detProdCFOP generates a mock CFOP code for det.
-func detProdCFOP() string {
-	return fmt.Sprintf("%04d", gofakeit.Number(5101, 5999)) // Example range
+// validSaleCFOPs lists operation CFOPs accepted by NFe validation. The 59xx
+// range ("outras saídas") and other non-operation codes are excluded because
+// downstream validation rejects them ("CFOP 59xx não permitido").
+var validSaleCFOPs = []string{
+	"5101", "5102", "5103", "5104", "5105", "5106",
+	"5109", "5110", "5111", "5112", "5113", "5114",
+	"5115", "5116", "5117", "5118", "5119", "5120",
+	"5122", "5123", "5124", "5125",
+	"5401", "5402", "5403", "5405",
+	"5651", "5652", "5653", "5654", "5655", "5656",
+}
+
+// detProdCFOP returns a valid sale CFOP for det. If a non-empty override is
+// passed, the first override value is used instead of a random pick.
+func detProdCFOP(override ...string) string {
+	if len(override) > 0 && override[0] != "" {
+		return override[0]
+	}
+	return gofakeit.RandomString(validSaleCFOPs)
 }
 
 // detProdUCom generates a mock unit of measure for det.
