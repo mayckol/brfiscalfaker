@@ -20,7 +20,7 @@ brfiscalfaker is a Go-based command-line tool designed to generate mock Brazilia
 
 ## Installation
 
-Ensure you have Go installed on your system (version 1.16 or higher).
+Ensure you have Go installed on your system (version 1.26 or higher).
 
 1. **Clone the Repository:**
 
