@@ -41,8 +41,12 @@ Run the application using the `go run command or the built binary.
 
 ### Command-Line Flags
 
-- **`--cpf` (`optional`):** --cpf: (Optional) Provide a custom CPF number to include in the invoice.
-- **`--cnpj` (`optional`):** --cnpj: (Optional) Provide a custom CNPJ number to include in the invoice.
+- **`--cpf` (`optional`):** Recipient CPF. In NF-e it makes the recipient a CPF instead of a CNPJ.
+- **`--cnpj` (`optional`):** Issuer (emit) CNPJ, numeric or alphanumeric, raw or masked. It is also embedded in the access key.
+- **`--dest-cnpj` (`optional`):** Recipient CNPJ (NF-e only).
+- **`--alnum-cnpj` (`optional`):** Use a random alphanumeric issuer CNPJ (July 2026 format).
+- **`--issued-at` (`optional`):** Issue date and time in RFC 3339 (e.g. `2026-11-24T10:30:00-03:00`).
+- **`--seed` (`optional`):** Non-zero seed for reproducible output.
 - **`--block-tags` (`optional`):** --block-tags: (Optional) Block specific XML tags from being included in the invoice.
 - **`--type` (`default NFCe`):** --type: (Optional) Specify the type of invoice to generate (NF-e, NFC-e, CFe, NFeDevolucao).
 
@@ -76,31 +80,40 @@ Run the application using the `go run command or the built binary.
 go get github.com/mayckol/brfiscalfaker
 ```
 
-### Testing Utilities
+### Generation Options
 
-For test code, use the convenient test helper from the nfs package:
+| Option | What it does |
+| --- | --- |
+| `WithCNPJ(cnpj string)` | Issuer (emit) CNPJ, also embedded in the access key. Numeric or alphanumeric, raw or masked (normalized to 14 upper-case characters). `Generate` returns an error if it does not have the CNPJ layout. |
+| `WithAlphanumericCNPJ()` | Random valid alphanumeric issuer CNPJ (July 2026 format). `WithCNPJ` wins over it. |
+| `WithCPF(cpf string)` | Recipient CPF (mask accepted). In NF-e it switches `<dest>` from `<CNPJ>` to `<CPF>`. |
+| `WithDestCNPJ(cnpj string)` | Recipient CNPJ in NF-e (numeric or alphanumeric). Wins over `WithCPF`. |
+| `WithIssuedAt(t time.Time)` | Issue date/time: `dhEmi`, `dhSaiEnt`/`dSaiEnt`, `dhRecbto` (a few seconds later), CF-e `dEmi`/`hEmi` and the key's AAMM. Written in Brasília time (UTC-03:00). Default: a random moment in the last 30 days. |
+| `WithSeed(seed int64)` | Reproducible output (same seed and options give the same XML). Combine with `WithIssuedAt`, since the default date depends on the current time. `0` means random. |
+| `WithBlockedPlaceholders(tags ...string)` | Removes the given XML elements from the output. |
+
+Every generated document is internally consistent:
+
+- The access key has the right layout and a valid mod-11 check digit, and it matches `cUF`, the issue month, the issuer CNPJ, the model (55 NF-e, 65 NFC-e, 59 CF-e), `serie`/`nNF`/`tpEmis`/`cNF` (or `nserieSAT`/`nCFe`/`cNF` for CF-e) and `cDV`. The `Id` attribute, the signature reference and `protNFe/infProt/chNFe` all carry the same key.
+- `tpEmis` and `tpAmb` are `1`; `cStat` is `100`.
+- One item per document, with `vProd = qCom × vUnCom`; totals (`vProd`, `vNF`, `vPag`, CF-e `vItem`/`vCFe`/`vMP`) equal the item value, and taxes are computed from it.
 
 ```go
-package mypackage_test
-
-import (
-    "testing"
-    "github.com/mayckol/brfiscalfaker/pkg/nfs"
+xmlBytes, err := generator.Generate(
+    nfs.WithIssuedAt(time.Now().Add(-2 * time.Hour)),
+    nfs.WithCNPJ("12.ABC.345/01DE-35"), // alphanumeric issuer CNPJ
+    nfs.WithCPF("529.982.247-25"),      // NF-e recipient becomes a CPF
+    nfs.WithSeed(42),
 )
-
-func TestInvoiceProcessing(t *testing.T) {
-    // Generate a valid NFe XML for testing
-    xml := nfs.GenerateValidInvoiceXML(t, nfs.NFe)
-
-    // Or with custom options
-    xml = nfs.GenerateValidInvoiceXML(t, nfs.NFCe,
-        nfs.WithCPF("12345678900"),
-        nfs.WithCNPJ("12345678901234"),
-    )
-
-    // Use the XML in your tests...
-}
 ```
+
+#### Alphanumeric CNPJ in invoices
+
+From July 2026 a CNPJ may hold letters in its first 12 positions. `WithCNPJ` and `WithDestCNPJ` accept them, and
+`WithAlphanumericCNPJ()` draws a random one for the issuer. The access key embeds the alphanumeric CNPJ at positions
+7-20, and its check digit follows the official rule: modulo 11 with every character valued as its ASCII code minus 48
+(digits keep their value, so numeric keys are unchanged). `br_documents.AccessKeyDV` and `br_documents.ValidateAccessKey`
+expose that rule.
 
 ### Create a Template Generator
 * **Random CNPJ, CPF, and Access Key Generation:**
@@ -133,14 +146,18 @@ func TestInvoiceProcessing(t *testing.T) {
 - **AccessKey()**
    - **Config**: Optional parameter to customize the generated key.
       - `Masked`: `bool`. If `true`, the Access Key is formatted with separators for readability. Default is `false` (raw digits).
+      - `CNPJ`: `string`. Issuer CNPJ, numeric or alphanumeric (raw or masked). Default is a random numeric CNPJ.
+      - `Model`, `UF`, `IssuedAt`: optional model (default `55`), UF code (default random) and issue date (default now).
 
 ```go
 package main
 
 import (
-   "log"
-   "github.com/mayckol/brfiscalfaker/pkg/nfs"
    "fmt"
+   "log"
+   "time"
+
+   "github.com/mayckol/brfiscalfaker/pkg/nfs"
 )
 
 func main() {
@@ -148,13 +165,14 @@ func main() {
    templateType := nfs.NFCe
 
    // Create the generator using the helper
-   generator, err := nfs.CreateTemplateGenerator(templateType)
+   generator, err := nfs.NewTemplateGenerator(templateType)
    if err != nil {
       log.Fatalf("Failed to create generator: %v", err)
    }
    options := []nfs.Option{
 	   nfs.WithCPF("01234567890"),
-	   nfs.WithCNPJ("12345678901234"),
+	   nfs.WithCNPJ("11222333000181"),
+	   nfs.WithIssuedAt(time.Now()),
    }
 
    // Generate the XML template
