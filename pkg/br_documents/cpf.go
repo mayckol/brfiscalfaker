@@ -81,3 +81,21 @@ func formatCPF(cpf []int) string {
 	}
 	return formatted.String()
 }
+
+// CompleteCPF appends the two check digits to a 9-digit base. It returns ""
+// when base is not exactly 9 digits.
+func CompleteCPF(base string) string {
+	if len(base) != 9 {
+		return ""
+	}
+	digits := make([]int, 0, 11)
+	for _, r := range base {
+		if r < '0' || r > '9' {
+			return ""
+		}
+		digits = append(digits, int(r-'0'))
+	}
+	digits = append(digits, calculateCPFCheckDigit(digits, 10))
+	digits = append(digits, calculateCPFCheckDigit(digits, 11))
+	return utils.DigitsToString(digits)
+}

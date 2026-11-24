@@ -123,9 +123,9 @@ func NCM() string {
 	return gofakeit.Numerify("########")
 }
 
-// CFOP generates a mock CFOP code.
+// CFOP returns a valid sale CFOP.
 func CFOP() string {
-	return gofakeit.RandomString([]string{"abc", "def", "ghi", "jkl", "mno", "pqr", "stu", "vwx", "yz"})
+	return detProdCFOP()
 }
 
 // uCom generates a mock unit of measure.
@@ -798,12 +798,12 @@ func detProdCProd() string {
 	return fmt.Sprintf("%05d", gofakeit.Number(1, 99999))
 }
 
-// detProdCEAN generates a mock EAN code for det. Can be empty.
+// detProdCEAN generates a mock EAN code for det, or "SEM GTIN".
 func detProdCEAN() string {
 	if gofakeit.Bool() {
 		return gofakeit.RandomString([]string{"789", "790", "791", "792", "793", "794", "795", "796", "797", "798", "799"})
 	}
-	return ""
+	return "SEM GTIN"
 }
 
 // detProdXProd generates a mock product name for det.
@@ -852,12 +852,12 @@ func detProdVProd() string {
 	return fmt.Sprintf("%.2f", gofakeit.Float64Range(0.01, 10000000.0))
 }
 
-// detProdCEANTrib generates a mock EAN code for taxation in det. Can be empty.
+// detProdCEANTrib generates a mock EAN code for taxation in det, or "SEM GTIN".
 func detProdCEANTrib() string {
 	if gofakeit.Bool() {
 		return gofakeit.RandomString([]string{"789", "790", "791", "792", "793", "794", "795", "796", "797", "798", "799"})
 	}
-	return ""
+	return "SEM GTIN"
 }
 
 // detProdUTrib generates a mock unit of taxation for det.

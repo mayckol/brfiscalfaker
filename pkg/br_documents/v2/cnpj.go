@@ -142,3 +142,33 @@ func isDigit(c byte) bool { return c >= '0' && c <= '9' }
 func isAlphanumericUpper(c byte) bool {
 	return isDigit(c) || (c >= 'A' && c <= 'Z')
 }
+
+// Normalize uppercases s and strips every character outside [A-Z0-9], turning
+// a masked CNPJ (numeric or alphanumeric) into its raw 14-character form.
+func Normalize(s string) string {
+	return sanitize(s)
+}
+
+// CompleteCNPJ appends the two check digits to a 12-character base (numeric or
+// alphanumeric; masks and lower case are accepted). It returns "" when the
+// normalized base is not 12 characters long.
+func CompleteCNPJ(base string) string {
+	b := []byte(sanitize(base))
+	if len(b) != cnpjBaseLength {
+		return ""
+	}
+	dv1 := checkDigit(b, dv1Weights)
+	dv2 := checkDigit(append(b, dv1), dv2Weights)
+	return string(b) + string(dv1) + string(dv2)
+}
+
+// HasValidFormat reports whether s, once normalized, has the CNPJ layout:
+// 12 alphanumeric characters followed by 2 digits. It does not check the
+// check digits; use ValidateCNPJ for that.
+func HasValidFormat(s string) bool {
+	cnpj := sanitize(s)
+	if len(cnpj) != cnpjLength {
+		return false
+	}
+	return isDigit(cnpj[12]) && isDigit(cnpj[13])
+}

@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/mayckol/brfiscalfaker/pkg/nfs"
 
@@ -18,6 +19,10 @@ func main() {
 	cnpj := flag.String("cnpj", "", "Optional CNPJ to include in the invoice")
 	templateType := flag.String("type", "NFCe", "Type of invoice to generate (CFe, NFe, NFCe, NFeDevolucao)")
 	blockTags := flag.String("block-tags", "", "Comma-separated list of placeholders to block (e.g., emitCNPJ,CNPJ,CPF)")
+	destCNPJ := flag.String("dest-cnpj", "", "Optional recipient CNPJ (NFe only)")
+	alnumCNPJ := flag.Bool("alnum-cnpj", false, "Use a random alphanumeric issuer CNPJ (July 2026 format)")
+	issuedAt := flag.String("issued-at", "", "Optional issue date and time in RFC 3339 (e.g. 2026-11-24T10:30:00-03:00)")
+	seed := flag.Int64("seed", 0, "Optional non-zero seed for reproducible output")
 
 	flag.Parse()
 
@@ -50,6 +55,22 @@ func main() {
 	if *cnpj != "" {
 		option := nfs.WithCNPJ(*cnpj)
 		options = append(options, option)
+	}
+	if *destCNPJ != "" {
+		options = append(options, nfs.WithDestCNPJ(*destCNPJ))
+	}
+	if *alnumCNPJ {
+		options = append(options, nfs.WithAlphanumericCNPJ())
+	}
+	if *issuedAt != "" {
+		t, err := time.Parse(time.RFC3339, *issuedAt)
+		if err != nil {
+			log.Fatalf("Invalid --issued-at: %v", err)
+		}
+		options = append(options, nfs.WithIssuedAt(t))
+	}
+	if *seed != 0 {
+		options = append(options, nfs.WithSeed(*seed))
 	}
 	if *blockTags != "" {
 		// Split the blockTags by comma and trim any whitespace

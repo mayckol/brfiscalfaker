@@ -2,6 +2,8 @@ package br_documents
 
 import (
 	"fmt"
+
+	v2 "github.com/mayckol/brfiscalfaker/pkg/br_documents/v2"
 	"math/rand"
 	"strconv"
 	"strings"
@@ -23,9 +25,16 @@ func AllDigitsAreIdentical(digits []int) bool {
 }
 
 // AccessKeyConfig holds configuration options for generating an Access Key.
+//
+// CNPJ may be numeric or alphanumeric (July 2026 format), raw or masked; it is
+// normalized to 14 upper-case characters. Model, UF and IssuedAt are optional:
+// when empty they default to "55", a random UF code and the current month.
 type AccessKeyConfig struct {
-	Masked bool
-	CNPJ   string
+	Masked   bool
+	CNPJ     string
+	Model    string
+	UF       string
+	IssuedAt time.Time
 }
 
 // AccessKey generates a valid random Chave de Acesso for NF-e.
@@ -45,6 +54,7 @@ func AccessKey(configs ...AccessKeyConfig) string {
 			config.CNPJ = CNPJ()
 		}
 	}
+	config.CNPJ = v2.Normalize(config.CNPJ)
 
 	// List of valid UF (Federative Unit) codes
 	ufCodes := []string{
@@ -55,16 +65,25 @@ func AccessKey(configs ...AccessKeyConfig) string {
 	}
 
 	// 1. UF Code: 2 digits
-	uf := ufCodes[rand.Intn(len(ufCodes))]
+	uf := config.UF
+	if uf == "" {
+		uf = ufCodes[rand.Intn(len(ufCodes))]
+	}
 
 	// 2. Year and Month: 4 digits (AAMM)
-	currentTime := time.Now()
+	currentTime := config.IssuedAt
+	if currentTime.IsZero() {
+		currentTime = time.Now()
+	}
 	yearMonth := fmt.Sprintf("%02d%02d", currentTime.Year()%100, currentTime.Month())
 
 	// 3. CNPJ: 14 digits (provided via config)
 
 	// 4. Model: 2 digits (assuming "55" for NF-e)
-	model := "55"
+	model := config.Model
+	if model == "" {
+		model = "55"
+	}
 
 	// 5. Series: 3 digits (000 to 999)
 	series := fmt.Sprintf("%03d", rand.Intn(1000))
@@ -94,18 +113,33 @@ func AccessKey(configs ...AccessKeyConfig) string {
 	return fullKey
 }
 
+// AccessKeyDV returns the check digit (cDV) for the first 43 characters of an
+// access key. Every character is valued as its ASCII code minus 48, so digits
+// keep their value and the letters of an alphanumeric CNPJ map to 17-42, as
+// the alphanumeric CNPJ rules require; numeric keys get the same DV as before.
+func AccessKeyDV(partialKey string) int {
+	return calculateAccessKeyDV(strings.ToUpper(partialKey))
+}
+
+// ValidateAccessKey reports whether key is a 44-character access key whose last
+// digit is the check digit of the first 43 characters.
+func ValidateAccessKey(key string) bool {
+	if len(key) != 44 {
+		return false
+	}
+	last := key[43]
+	if last < '0' || last > '9' {
+		return false
+	}
+	return AccessKeyDV(key[:43]) == int(last-'0')
+}
+
 // calculateAccessKeyDV calculates the Verification Digit (DV) for the Access Key.
-// It uses the modulo 11 algorithm as specified.
+// It uses the modulo 11 algorithm, valuing each character as ASCII - 48.
 func calculateAccessKeyDV(key string) int {
-	// Convert key to a slice of integers
 	digits := make([]int, len(key))
-	for i, char := range key {
-		digit, err := strconv.Atoi(string(char))
-		if err != nil {
-			digits[i] = 0
-		} else {
-			digits[i] = digit
-		}
+	for i := 0; i < len(key); i++ {
+		digits[i] = int(key[i]) - 48
 	}
 
 	// Define multipliers: start from the right, repeating 2 to 9

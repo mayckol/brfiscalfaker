@@ -13,15 +13,15 @@ const CFeXMLMock = `<?xml version="1.0" encoding="utf-8"?>
 <hEmi>{%hEmi%}</hEmi>
 <cDV>{%cDV%}</cDV>
 <tpAmb>{%tpAmb%}</tpAmb>
-<CNPJ>{%emitCNPJ%}</CNPJ>
+<CNPJ>{%acCNPJ%}</CNPJ>
 <signAC>{%signAC%}</signAC>
 <assinaturaQRCODE>{%assinaturaQRCODE%}</assinaturaQRCODE>
 <numeroCaixa>{%numeroCaixa%}</numeroCaixa>
 </ide>
 <emit>
-<CNPJ>{%CNPJ%}</CNPJ>
-<xNome>{%xNome%}</xNome>
-<xFant>{%xFant%}</xFant>
+<CNPJ>{%emitCNPJ%}</CNPJ>
+<xNome>{%emitXNome%}</xNome>
+<xFant>{%emitXFant%}</xFant>
 <enderEmit>
 <xLgr>{%xLgr%}</xLgr>
 <nro>{%nro%}</nro>
@@ -36,7 +36,7 @@ const CFeXMLMock = `<?xml version="1.0" encoding="utf-8"?>
 </emit>
 <dest>
 <CPF>{%CPF%}</CPF>
-<xNome>{%xNome%}</xNome>
+<xNome>{%destXNome%}</xNome>
 </dest>
 <det nItem="{%nItem%}">
 <prod>
@@ -57,23 +57,23 @@ const CFeXMLMock = `<?xml version="1.0" encoding="utf-8"?>
 <ICMS>
 <ICMS00>
 <Orig>{%Orig%}</Orig>
-<CST>{%CST%}</CST>
+<CST>{%CST_ICMS%}</CST>
 <pICMS>{%pICMS%}</pICMS>
 <vICMS>{%vICMS%}</vICMS>
 </ICMS00>
 </ICMS>
 <PIS>
 <PISAliq>
-<CST>{%CST%}</CST>
-<vBC>{%vBC%}</vBC>
+<CST>{%impostoPISAliqCST%}</CST>
+<vBC>{%vBC_PIS%}</vBC>
 <pPIS>{%pPIS%}</pPIS>
 <vPIS>{%vPIS%}</vPIS>
 </PISAliq>
 </PIS>
 <COFINS>
 <COFINSAliq>
-<CST>{%CST%}</CST>
-<vBC>{%vBC%}</vBC>
+<CST>{%impostoCOFINSAliqCST%}</CST>
+<vBC>{%vBC_COFINS%}</vBC>
 <pCOFINS>{%pCOFINS%}</pCOFINS>
 <vCOFINS>{%vCOFINS%}</vCOFINS>
 </COFINSAliq>
@@ -113,7 +113,7 @@ const CFeXMLMock = `<?xml version="1.0" encoding="utf-8"?>
 <SignedInfo>
 <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></CanonicalizationMethod>
 <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"></SignatureMethod>
-<Reference URI="#CFe35241006346545001536590011973410076397299542">
+<Reference URI="#CFe{%accessKey%}">
 <Transforms>
 <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"></Transform>
 <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"></Transform>
@@ -337,7 +337,7 @@ const NFeDevolucaoXMLMock = `<?xml version="1.0" encoding="UTF-8"?>
         <cNF>{%cNF%}</cNF>
         <natOp>{%natOp%}</natOp>
         <mod>55</mod>
-        <serie>55</serie>
+        <serie>{%serie%}</serie>
         <nNF>{%nNF%}</nNF>
         <dhEmi>{%dhEmi%}</dhEmi>
         <dhSaiEnt>{%dhSaiEnt%}</dhSaiEnt>
@@ -586,6 +586,7 @@ const NFeXMLMock = `<NFe xmlns="http://www.portalfiscal.inf.br/nfe">
 </emit>
 <dest>
 <CNPJ>{%destCNPJ%}</CNPJ>
+<CPF>{%destCPF%}</CPF>
 <xNome>{%destXNome%}</xNome>
 <enderDest>
 <xLgr>{%enderDestXLgr%}</xLgr>

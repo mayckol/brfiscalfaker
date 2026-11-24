@@ -2,12 +2,18 @@ package nfs
 
 import (
 	"fmt"
-	"github.com/mayckol/brfiscalfaker/pkg/br_documents"
 	"html"
-	"log"
 	"regexp"
+	"sort"
 	"strings"
+	"sync"
+
+	"github.com/brianvoe/gofakeit/v6"
 )
+
+// generationMu serializes generation so that WithSeed gives reproducible
+// output: every value is drawn from gofakeit's global source.
+var generationMu sync.Mutex
 
 type DependencyGraph map[string][]string
 
@@ -53,6 +59,19 @@ func ReplaceTemplate(template string, options ...Option) ([]byte, error) {
 		opt(cfg)
 	}
 
+	generationMu.Lock()
+	defer generationMu.Unlock()
+	if cfg.seed != nil {
+		gofakeit.Seed(*cfg.seed)
+		// Leave the shared source unpredictable again for unseeded calls.
+		defer gofakeit.Seed(0)
+	}
+
+	invoiceValues, err := buildInvoiceValues(template, cfg)
+	if err != nil {
+		return nil, err
+	}
+
 	// Regular expression to find placeholders in the form {%key%}
 	re := regexp.MustCompile(`\{\%(\w+)%\}`)
 
@@ -74,6 +93,7 @@ func ReplaceTemplate(template string, options ...Option) ([]byte, error) {
 	for key := range keySet {
 		keys = append(keys, key)
 	}
+	sort.Strings(keys)
 
 	// Define dependencies
 	dependencies := DependencyGraph{
@@ -92,6 +112,10 @@ func ReplaceTemplate(template string, options ...Option) ([]byte, error) {
 
 	// Iterate through all sorted keys and generate mock values
 	for _, key := range sortedKeys {
+		if value, ok := invoiceValues[key]; ok {
+			replacements[key] = value
+			continue
+		}
 		replacements[key] = generateMockValue(key, replacements, cfg)
 	}
 
@@ -102,6 +126,10 @@ func ReplaceTemplate(template string, options ...Option) ([]byte, error) {
 		escapedValue := html.EscapeString(value)
 		result = strings.ReplaceAll(result, placeholder, escapedValue)
 	}
+
+	// Remove the elements the options left out (e.g. the NF-e recipient's CPF
+	// when it has a CNPJ).
+	result = omitRe.ReplaceAllString(result, "")
 
 	// Remove entire XML tags that correspond to blocked placeholders,
 	// including any surrounding whitespace and newline characters
@@ -123,16 +151,6 @@ func ReplaceTemplate(template string, options ...Option) ([]byte, error) {
 // It uses provided CPF/CNPJ if available.
 func generateMockValue(key string, replacements map[string]string, cfg *generationConfig) string {
 	switch key {
-	case "accessKey":
-		emitCNPJ, exists := replacements["emitCNPJ"]
-		if !exists || emitCNPJ == "" {
-			log.Printf("Warning: emitCNPJ not set before accessKey generation.")
-			emitCNPJ = br_documents.CNPJ()
-		}
-		accessKey := br_documents.AccessKey(br_documents.AccessKeyConfig{
-			CNPJ: emitCNPJ,
-		})
-		return accessKey
 	case "cUF":
 		return cUF()
 	case "cNF":
@@ -171,11 +189,8 @@ func generateMockValue(key string, replacements map[string]string, cfg *generati
 		return procEmi()
 	case "verProc":
 		return verProc()
-	case "emitCNPJ", "CNPJ", "destCNPJ", "transpTransportaCNPJ", "cardCNPJ", "retiradaCNPJ", "entregaCNPJ":
-		if cfg.CNPJ != "" {
-			return cfg.CNPJ
-		}
-		return br_documents.CNPJ()
+	case "CNPJ", "transpTransportaCNPJ", "cardCNPJ", "retiradaCNPJ", "entregaCNPJ":
+		return fakeCNPJ()
 	case "emitXNome":
 		return xNome()
 	case "xLgr":
@@ -204,11 +219,6 @@ func generateMockValue(key string, replacements map[string]string, cfg *generati
 		return IE()
 	case "CRT":
 		return CRT()
-	case "CPF":
-		if cfg.CPF != "" {
-			return cfg.CPF
-		}
-		return br_documents.CPF()
 	case "destXNome":
 		return xNome()
 	case "xLgrDest":
